@@ -4,7 +4,7 @@ import logging
 import chromadb
 from chromadb.config import Settings as ChromaSettings
 from langchain_huggingface import HuggingFaceEmbeddings
-from src.core.config import settings
+from src.config.settings import settings
 
 logger = logging.getLogger(__name__)
 
