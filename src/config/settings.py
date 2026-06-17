@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     embedding_model: str = "BAAI/bge-small-zh-v1.5"
 
     # 数据库
-    database_url: str = "sqlite:///./ragchat.db"
+    database_url: str = "postgresql://postgres:postgres@localhost:5432/ragchat"
 
     # 向量库
     chroma_persist_dir: str = "./chroma_db"

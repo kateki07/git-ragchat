@@ -1,9 +1,8 @@
 from fastapi import APIRouter
 
-router = APIRouter(tags=["chat"],prefix="/chat")
+router = APIRouter(prefix="/chat", tags=["chat"])
+
 
 @router.get("/")
 def get_chat():
     return {"message": "This is a chat endpoint"}
-
-
