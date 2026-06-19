@@ -16,3 +16,7 @@ wheels/
 ragchat.db
 chroma_db/
 uploads/
+
+# 日志文件
+*.log
+uvicorn_*.txt
