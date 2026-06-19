@@ -1,3 +1,4 @@
-from src.dao.knowledge_dao import CollectionDAO, FileDAO, ChunkDAO
+from src.dao.base_dao import BaseDao
+from src.dao.user_dao import UserDao
 
-__all__ = ["CollectionDAO", "FileDAO", "ChunkDAO"]
+__all__ = ["BaseDao", "UserDao"]
