@@ -25,7 +25,7 @@ class BaseDao:
 
     async def batch_create(self, objects: list):
         """汎用一括作成メソッド"""
-        instances = [self.model(**obj.dict()) for obj in objects]
+        instances = [self.model(**obj.model_dump()) for obj in objects]
         self.db.add_all(instances)
         await self.db.commit()
         for instance in instances:
