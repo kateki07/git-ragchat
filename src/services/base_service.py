@@ -72,6 +72,10 @@ class BaseService(Generic[DTOType]):
 
     async def delete_by_id(self, id) -> bool:
         """汎用削除メソッド"""
+        return await self.delete(id)
+
+    async def delete(self, id) -> bool:
+        """汎用削除メソッド"""
         try:
             existing = await self.dao.get_by_primary_key(id)
             if existing is None:
