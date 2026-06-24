@@ -1,0 +1,13 @@
+import os
+from jinja2 import Environment, FileSystemLoader
+
+
+class SQLTemplateManager:
+    """Jinja2を使ってSQLテンプレートをレンダリングするクラス"""
+
+    def __init__(self, template_dir: str):
+        self.env = Environment(loader=FileSystemLoader(template_dir))
+
+    def render_sql(self, template_name: str, **kwargs) -> str:
+        template = self.env.get_template(template_name)
+        return template.render(**kwargs)
