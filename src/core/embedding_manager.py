@@ -2,6 +2,7 @@ import os
 import torch
 from langchain_huggingface import HuggingFaceEmbeddings
 from src.config.settings import settings
+from src.core.constant import EMBEDDINGS_PATH
 from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
@@ -13,7 +14,21 @@ async def initialize_embeddings() -> None:
     """アプリ起動時に埋め込みモデルをシングルトンで初期化する"""
     global _embeddings
     try:
-        model_path = settings.embedding_model
+        # DBの設定からモデルパスを動的に取得する
+        model_path = ""
+        from src.db.pg_db import get_db
+        from src.services.data_dictionary_service import DataDictionaryService
+        async for db_session in get_db():
+            dict_service = DataDictionaryService(db_session)
+            embedding_path = await dict_service.get_by_key(EMBEDDINGS_PATH)
+            if embedding_path:
+                model_path = embedding_path.value
+                logger.info(f"DBからEmbeddingモデルパスを取得: {model_path}")
+
+        if not model_path:
+            model_path = settings.embedding_model
+            logger.warning(f"DBに設定なし、デフォルトパスを使用: {model_path}")
+
         device = "cuda" if torch.cuda.is_available() else "cpu"
         logger.info(f"埋め込みモデルロード開始: device={device}")
 
